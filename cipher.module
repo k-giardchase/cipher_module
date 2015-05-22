@@ -61,8 +61,9 @@ function cipher_form_submit($form, &$form_state) {
                 $encrypt_key = $letter_key - $shift;
                 $remainder_key = $encrypt_key % 25;
                 if($encrypt_key < 0) {
+                    $abs_key = abs($remainder_key);
                     $reverse_alphas = array_reverse($alphas, true);
-                    $new_letter = $reverse_alphas[$remainder_key];
+                    $new_letter = $reverse_alphas[$abs_key];
                     array_push($encrypted, $new_letter);
                 } else {
                     $new_letter = $alphas[$remainder_key];
