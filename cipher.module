@@ -78,4 +78,14 @@ function cipher_form_submit($form, &$form_state) {
             array_push($letter, $encrypted);
         }
     }
+
+    $result = implode(",", $encrypted);
+    $_SESSION['cipher_output'] = $result;
+    $form_state['redirect'] = 'success';
+}
+
+function cipher_success() {
+    $encrypted_phrase = $_SESSION['cipher_output'];
+    return "<p>Your final phrase is: $encrypted_phrase</p>";
+
 }
