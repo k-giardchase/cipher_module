@@ -53,7 +53,7 @@ function cipher_form() {
 
 function element_validate_direction($element) {
     if(strtolower($element['#value']) != ('right' || 'left')) {
-        form_error($element, t('Direction must be right or left.'))
+        form_error($element, t('Direction must be right or left.'));
     }
 }
 
