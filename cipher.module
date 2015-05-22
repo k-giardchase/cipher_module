@@ -55,7 +55,7 @@ function cipher_form_submit($form, &$form_state) {
     $encrypted = [];
 
     foreach($letters as $letter) {
-        if(in_array($letter, $alphas)) {
+        if($letter != ("!" || " " || "-" || "?" || "!" || ".") {
             $letter_key = array_search($letter, $alphas);
             if($direction == 'left') {
                 $encrypt_key = $letter_key - $shift;
@@ -75,11 +75,11 @@ function cipher_form_submit($form, &$form_state) {
                     array_push($encrypted, $new_letter);
                 }
         } else {
-            array_push($encrypted, $new_letter);
+            array_push($encrypted, $letter);
         }
     }
 
-    $result = implode("", $encrypted);
+    $result = strtolower(implode("", $encrypted));
     $_SESSION['cipher_output'] = $result;
     $form_state['redirect'] = 'success';
 }
