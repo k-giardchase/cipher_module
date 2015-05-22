@@ -63,19 +63,19 @@ function cipher_form_submit($form, &$form_state) {
                 if($encrypt_key < 0) {
                     $reverse_alphas = array_reverse($alphas, true);
                     $new_letter = $reverse_alphas[$remainder_key];
-                    array_push($new_letter, $encrypted);
+                    array_push($encrypted, $new_letter);
                 } else {
                     $new_letter = $alphas[$remainder_key];
-                    array_push($new_letter, $encrypted);
+                    array_push($encrypted, $new_letter);
                 }
             } else { //direction == right
                     $encrypt_key = $letter_key . $shift;
                     $remainder_key = $encrypt_key % 25;
                     $new_letter = $alphas[$remainder_key];
-                    array_push($new_letter, $encrypted);
+                    array_push($encrypted, $new_letter);
                 }
         } else {
-            array_push($letter, $encrypted);
+            array_push($encrypted, $new_letter);
         }
     }
 
