@@ -70,7 +70,7 @@ function cipher_form_submit($form, &$form_state) {
                     array_push($encrypted, $new_letter);
                 }
             } else { //direction == right
-                    $encrypt_key = $letter_key . $shift;
+                    $encrypt_key = $letter_key + $shift;
                     $remainder_key = $encrypt_key % 25;
                     $new_letter = $alphas[$remainder_key];
                     array_push($encrypted, $new_letter);
