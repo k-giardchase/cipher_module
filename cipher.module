@@ -26,6 +26,18 @@ function cipher_form() {
         '#description' => t('Please enter your word or phrase here.'),
     );
 
+    $form['direction'] = array(
+        '#title' => 'Direction',
+        '#type' => 'textfield',
+        '#description' => t('Please enter which direction you would like to encrypt in.'),
+    );
+
+    $form['shift'] = array(
+        '#title' => 'Shift',
+        '#type' => 'textfield',
+        '#description' => t('Please enter how many letters you would like to shift by.'),
+    );
+
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => 'Encrypt',
@@ -34,8 +46,36 @@ function cipher_form() {
     return $form;
 }
 
-// function cipher_form_submit($form, &$form_state) {
-//     $phrase = $form_state['values']['phrase'];
-//     $phrase_lower = strtolower($phrase);
-//
-// }
+function cipher_form_submit($form, &$form_state) {
+    $phrase = $form_state['values']['phrase'];
+    $direction = $form_state['values']['direction'];
+    $shift = $form_state['values']['shift'];
+    $letters = str_split(explode(" ", strtoupper($phrase)));
+    $alphas = range('A', 'Z');
+    $encrypted = [];
+
+    foreach($letters as $letter) {
+        if(in_array($letter, $alphas)) {
+            $letter_key = array_search($letter, $alphas);
+            if($direction == 'left') {
+                $encrypt_key = $letter_key - $shift;
+                $remainder_key = $encrypt_key % 25;
+                if($encrypt_key < 0) {
+                    $reverse_alphas = array_reverse($alphas, true);
+                    $new_letter = $reverse_alphas[$remainder_key];
+                    array_push($new_letter, $encrypted);
+                } else {
+                    $new_letter = $alphas[$remainder_key];
+                    array_push($new_letter, $encrypted);
+                }
+            } else { //direction == right
+                    $encrypt_key = $letter_key . $shift;
+                    $remainder_key = $encrypt_key % 25;
+                    $new_letter = $alphas[$remainder_key];
+                    array_push($new_letter, $encrypted);
+                }
+        } else {
+            array_push($letter, $encrypted);
+        }
+    }
+}
